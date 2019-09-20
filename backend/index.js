@@ -103,7 +103,7 @@ app.post("/createCertifier", (req, res) => {
   console.log(req.body.name);
     const id = SHA256(Date.now()).toString()
   //Code Goes Here
-  invoke(id,name);
+  invoke(id,req.body.name);
   res.send(req.body.name);
 });
 
