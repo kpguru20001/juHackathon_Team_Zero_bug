@@ -14,19 +14,19 @@ class CertifierContract extends Contract {
             return('Added <--> ', events[i]);
         }
         console.info('============= END : Initialize Ledger ===========');
-        
+
     }
-//check if certifier exists
+    //check if certifier exists
     async certifierExists(ctx, certifierId) {
         const buffer = await ctx.stub.getState(certifierId);
         return (!!buffer && buffer.length > 0);
     }
-//check if certificate exists
+    //check if certificate exists
     async certificateExists(ctx, certificateId) {
         const buffer = await ctx.stub.getState(certificateId);
         return (!!buffer && buffer.length > 0);
     }
-//creating certifer , if exists - throw error , else taking the value and write it onto the chain
+    //creating certifer , if exists - throw error , else taking the value and write it onto the chain
     async createCertifier(ctx, certifierId,name) {
         const exists = await this.certifierExists(ctx, certifierId);
         if (exists) {
@@ -45,7 +45,7 @@ class CertifierContract extends Contract {
         const out = await ctx.stub.putState(certificateId,Buffer.from(JSON.stringify(certificate)));
         return out;
     }
-//reading the certifier, if doesnt exist throw erroe else takes the certifier id and return it
+    //reading the certifier, if doesn't exist throw error else takes the certifier id and return it
     async readCertifier(ctx, certifierId) {
         const certifAsBytes = await ctx.stub.getState(certifierId); // get the car from chaincode state
         if (!certifAsBytes || certifAsBytes.length === 0) {
@@ -64,7 +64,7 @@ class CertifierContract extends Contract {
         return certificateAsBytes.toString();
     }
 
-//updating the certificate with the verification status, if not verified - throw error else wtite verified onto the chain
+    //updating the certificate with the verification status, if not verified - throw error else write verified onto the chain
     async updateCertificate(ctx, certificateId, ifVerified) {
         console.info('============= START : changeCarOwner ===========');
 
@@ -78,7 +78,7 @@ class CertifierContract extends Contract {
         return await ctx.stub.putState(certificateId, Buffer.from(JSON.stringify(certificate)));
 
     }
-//deleting the certifer, if doesnt throws and error else deletes the state  
+    //deleting the certifer, if doesn't throws and error else deletes the state
     async deleteCertifier(ctx, certifierId) {
         const exists = await this.certifierExists(ctx, certifierId);
         if (!exists) {
