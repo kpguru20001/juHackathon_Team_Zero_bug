@@ -1,7 +1,7 @@
 {
     "name": "chaincodes",
-    "version": "0.0.1",
-    "description": "My Smart Contract",
+    "version": "0.0.12",
+    "description": "Chaincode transactions",
     "main": "index.js",
     "engines": {
         "node": ">=8",
