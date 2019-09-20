@@ -1,6 +1,8 @@
 const express = require("express");
 const parser = require("body-parser");
 const lodash = require("lodash");
+const invoke = require("./hyp-ledg/invoke");
+const { SHA256 } = require("crypto-js");
 var app = express();
 
 app.use(parser.json());
@@ -99,7 +101,9 @@ app.post("/verifyCertificate", (req, res) => {
 app.post("/createCertifier", (req, res) => {
   console.log("Registering Certifier");
   console.log(req.body.name);
+    const id = SHA256(Date.now()).toString()
   //Code Goes Here
+  invoke(id,name);
   res.send(req.body.name);
 });
 
