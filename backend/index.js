@@ -1,7 +1,14 @@
 const express = require("express");
 const parser = require("body-parser");
 const lodash = require("lodash");
-const {createCertifier,fetchUsers,addEvent,verifyEvent,createCertificate,updateCertificate} = require("./hyp-ledg/invoketst");
+const {
+  createCertifier,
+  fetchUsers,
+  addEvent,
+  verifyEvent,
+  createCertificate,
+  updateCertificate
+} = require("./hyp-ledg/invoketst");
 const { SHA256 } = require("crypto-js");
 var app = express();
 
@@ -58,10 +65,10 @@ app.get("/getCerifierProfile/:userId", (req, res) => {
 
 //GET - Send UserID
 app.get("/getCerificates/:userId", (req, res) => {
-    console.log("Get Certificates");
-    console.log(req.params.userId);
-    //Code Goes Here
-    res.send(req.params.userId);
+  console.log("Get Certificates");
+  console.log(req.params.userId);
+  //Code Goes Here
+  res.send(req.params.userId);
 });
 
 //GET - Nothing To Send
@@ -76,7 +83,12 @@ app.post("/addEvent", (req, res) => {
   console.log("Add Event");
   console.log(req.body.name);
   //Code Goes Here
-  addEvent((Math.random().toFixed(3) * 1000).toString(),req.body.name,req.body.domain,"123")
+  addEvent(
+    (Math.random().toFixed(3) * 1000).toString(),
+    req.body.name,
+    req.body.domain,
+    "123"
+  );
   res.send(req.body.name);
 });
 
@@ -86,7 +98,7 @@ app.post("/verifyEvent", (req, res) => {
   console.log(req.body.userId);
   console.log(req.body.eventId);
   //Code Goes Here
-    verifyEvent(req.body.userId, req.body.eventId)
+  verifyEvent(req.body.userId, req.body.eventId);
   res.send(req.body.userId);
 });
 
@@ -96,16 +108,21 @@ app.post("/addCertificate", (req, res) => {
   console.log("Adding Certificate");
   console.log(req.body.userId);
   //Code Goes Here
-    createCertificate((Math.random().toFixed(3) * 1000).toString,'123',req.body.userId,req.body.domain);
+  createCertificate(
+    (Math.random().toFixed(3) * 1000).toString,
+    "123",
+    req.body.userId,
+    req.body.domain
+  );
   res.send(req.body.userId);
 });
 
 //Post - Send userId and certificateId
 app.post("/verifyCertificate", (req, res) => {
   console.log("Verifying Certificate");
-  
+
   //Code Goes Here
-  updateCertificate(req.body.certifierId,'yes')
+  updateCertificate(req.body.certifierId, "yes");
   res.send(req.body.certifierId);
 });
 
@@ -115,7 +132,7 @@ app.post("/createCertifier", (req, res) => {
   console.log(req.body.name);
   const id = req.body.id;
   //Code Goes Here
-  var resss = createCertifier(id,req.body.name);
+  var resss = createCertifier(id, req.body.name);
   res.send(resss);
 });
 
@@ -133,19 +150,83 @@ app.post("/login", (req, res) => {
   var body = lodash.pick(req.body, ["userId", "password"]);
   console.log(req.body.userId);
   if (body.userId == "123" && body.password == "1234") {
-      blocks = fetchUsers();
-      emps = blocks.filter((blck) => {
-          if (blck.Record.role == 1)
-              return blck;
-      });
-      certs = blocks.filter((blck) => {
-          if (blck.Record.role == )
-              return blck;
-      });
-      emps = blocks.filter((blck) => {
-          if (blck.Record.role == 1)
-              return blck;
-      }); 
+    blocks = fetchUsers();
+    emps = blocks.filter(blck => {
+      if (blck.Record.role == 1) return blck;
+    });
+    certs = blocks.filter(blck => {
+      if (blck.Record.role == 2) return blck;
+    });
+    evnts = blocks.filter(blck => {
+      if (blck.Record.role == 3) return blck;
+    });
+    // res.send({
+    //   verified: "yes",
+    //   employees: emps,
+    //   certificates: certs,
+    //   events: evnts,
+    //   me: {
+    //     Key: "12",
+    //     Record: { certifierId: "56", name: "hola", expertise: "block", role: 0 }
+    //   }
+    // });
+    res.send({
+      verified: "yes",
+      events: [
+        {
+          Key: "1",
+          Record: {
+            certifierId: "1",
+            eventName: "jss",
+            expertise: "block",
+            role: 3
+          }
+        },
+        {
+          Key: "123",
+          Record: {
+            certifierId: "12",
+            eventName: "jain",
+            expertise: "iot",
+            role: 3
+          }
+        }
+      ],
+      employees: [
+        {
+          Key: "1",
+          Record: { certifierId: "1", name: "jss", expertise: "block", role: 3 }
+        },
+        {
+          Key: "123",
+          Record: { certifierId: "12", name: "jain", expertise: "iot", role: 3 }
+        }
+      ],
+      employees: [
+        {
+          Key: "145",
+          Record: {
+            certifierId: "123",
+            name: "jss",
+            expertise: "block chain",
+            role: 2
+          }
+        },
+        {
+          Key: "144",
+          Record: {
+            certifierId: "123",
+            name: "jain",
+            expertise: "iot",
+            role: 2
+          }
+        }
+      ],
+      me: {
+        Key: "1",
+        Record: { certifierId: "56", name: "hola", expertise: "block", role: 0 }
+      }
+    });
   } else {
     res.send({ verified: "no" });
   }
