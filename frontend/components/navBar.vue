@@ -32,10 +32,11 @@
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
+          <nuxt-link :to="item.link">
+            <v-list-item-content>
+              <v-list-item-title>{{ item.title }}</v-list-item-title>
+            </v-list-item-content>
+          </nuxt-link>
         </v-list-item>
       </v-list>
       <template v-slot:append>
@@ -55,9 +56,9 @@ export default {
     return {
       drawer: null,
       items: [
-        { title: 'Dashboard', icon: 'dashboard' },
-        { title: 'Account', icon: 'account_box' },
-        { title: 'Admin', icon: 'gavel' }
+        { title: 'Dashboard', icon: 'dashboard', link: '/user' },
+        { title: 'Account', icon: 'account_box', link: '/user' },
+        { title: 'Admin', icon: 'gavel', link: '/user' }
       ]
     }
   }

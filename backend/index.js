@@ -1,7 +1,7 @@
 const express = require("express");
 const parser = require("body-parser");
 const lodash = require("lodash");
-const invoke = require("./hyp-ledg/invoke");
+//const invoke = require("./hyp-ledg/invoke");
 const { SHA256 } = require("crypto-js");
 var app = express();
 
@@ -56,6 +56,14 @@ app.get("/getCerifierProfile/:userId", (req, res) => {
   res.send(req.params.userId);
 });
 
+//GET - Send UserID
+app.get("/getCerificates/:userId", (req, res) => {
+    console.log("Get Certificates");
+    console.log(req.params.userId);
+    //Code Goes Here
+    res.send(req.params.userId);
+});
+
 //GET - Nothing To Send
 app.get("/getAllCerifierProfile", (req, res) => {
   console.log("Get All Certifier Profiles");
@@ -101,9 +109,13 @@ app.post("/verifyCertificate", (req, res) => {
 app.post("/createCertifier", (req, res) => {
   console.log("Registering Certifier");
   console.log(req.body.name);
-    const id = SHA256(Date.now()).toString()
+  const id = req.body.certifierId;
   //Code Goes Here
+<<<<<<< HEAD
   invoke(id,req.body.name);
+=======
+  //invoke(id, name);
+>>>>>>> 361ca5111ddd35d039b423d5e259e7e1422b8303
   res.send(req.body.name);
 });
 
@@ -113,6 +125,21 @@ app.post("/createUser", (req, res) => {
   console.log(req.body.name);
   //Code Goes Here
   res.send(req.body.name);
+});
+
+app.post("/login", (req, res) => {
+  //console.log(req);
+  console.log("loggging in ");
+  var body = lodash.pick(req.body, ["userId", "password"]);
+  console.log(req.body.userId);
+  if (body.userId == "123" && body.password == "123") {
+      res.send({ verified: "yes", events: [{ Key: "1", Record: { certifierId: "1", eventName: "jss", expertise: "block", role: 3 } }, { Key: "123", Record: { certifierId: "12", eventName: "jain", expertise: "iot", role: 3 } }],
+          employees:[{ Key: "1", Record: { certifierId: "1", name: "jss", expertise: "block", role: 3 } }, { Key: "123", Record: { certifierId: "12", name: "jain", expertise: "iot", role: 3 } }], 
+          me: { Key: "1", Record: { certifierId: "56", name: "hola", expertise: "block", role: 0 } }
+        });
+  } else {
+    res.send({ verified: "no" });
+  }
 });
 
 app.listen(3001, () => {});

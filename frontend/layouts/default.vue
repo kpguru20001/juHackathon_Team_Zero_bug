@@ -1,7 +1,9 @@
 <template>
   <v-app>
     <navbar />
-    <nuxt />
+    <div class="container">
+      <nuxt />
+    </div>
   </v-app>
 </template>
 
@@ -12,6 +14,7 @@ export default {
     navbar
   }
 }
+
 </script>
 
 <style>
