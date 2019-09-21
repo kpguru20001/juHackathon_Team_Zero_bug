@@ -1,7 +1,7 @@
 const express = require("express");
 const parser = require("body-parser");
 const lodash = require("lodash");
-//const invoke = require("./hyp-ledg/invoke");
+const {createCertifier,fetchUsers} = require("./hyp-ledg/invoke");
 const { SHA256 } = require("crypto-js");
 var app = express();
 
@@ -109,14 +109,10 @@ app.post("/verifyCertificate", (req, res) => {
 app.post("/createCertifier", (req, res) => {
   console.log("Registering Certifier");
   console.log(req.body.name);
-  const id = req.body.certifierId;
+  const id = req.body.id;
   //Code Goes Here
-<<<<<<< HEAD
-  invoke(id,req.body.name);
-=======
-  //invoke(id, name);
->>>>>>> 361ca5111ddd35d039b423d5e259e7e1422b8303
-  res.send(req.body.name);
+  var resss = createCertifier(id,req.body.name);
+  res.send(resss);
 });
 
 //Post - Send user name
