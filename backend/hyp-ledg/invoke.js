@@ -19,9 +19,9 @@ async function invoke(id,name) {
     console.log(`Wallet path: ${walletPath}`);
 
     // Check to see if we've already enrolled the user.
-    // const userExists = await wallet.exists('user1');
+    // const userExists = await wallet.exists('admin');
     // if (!userExists) {
-    //     console.log('An identity for the user "user1" does not exist in the wallet');
+    //     console.log('An identity for the user "admin" does not exist in the wallet');
     //     console.log('Run the registerUser.js application before retrying');
     //     return;
     // }
@@ -30,7 +30,7 @@ async function invoke(id,name) {
     const gateway = new Gateway();
     await gateway.connect(ccpPath, {
       wallet,
-      identity: "user1",
+      identity: "admin",
       discovery: { enabled: true, asLocalhost: true }
     });
 

@@ -35,14 +35,16 @@ export default {
       items: ['Blockchain', 'AI', 'Javascript']
     }
   },
+  watch: {
+    chips () {
+      console.log(this.chips)
+    }
+  },
 
   methods: {
     remove (item) {
       this.chips.splice(this.chips.indexOf(item), 1)
       this.chips = [...this.chips]
-    },
-    select () {
-      console.log(this.items)
     }
   }
 }
