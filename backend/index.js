@@ -1,14 +1,6 @@
 const express = require("express");
 const parser = require("body-parser");
 const lodash = require("lodash");
-const {
-  createCertifier,
-  fetchUsers,
-  addEvent,
-  verifyEvent,
-  createCertificate,
-  updateCertificate
-} = require("./hyp-ledg/invoketst");
 const { SHA256 } = require("crypto-js");
 var app = express();
 
@@ -83,12 +75,6 @@ app.post("/addEvent", (req, res) => {
   console.log("Add Event");
   console.log(req.body.name);
   //Code Goes Here
-  addEvent(
-    (Math.random().toFixed(3) * 1000).toString(),
-    req.body.name,
-    req.body.domain,
-    "123"
-  );
   res.send(req.body.name);
 });
 
@@ -98,7 +84,6 @@ app.post("/verifyEvent", (req, res) => {
   console.log(req.body.userId);
   console.log(req.body.eventId);
   //Code Goes Here
-  verifyEvent(req.body.userId, req.body.eventId);
   res.send(req.body.userId);
 });
 
@@ -108,12 +93,6 @@ app.post("/addCertificate", (req, res) => {
   console.log("Adding Certificate");
   console.log(req.body.userId);
   //Code Goes Here
-  createCertificate(
-    (Math.random().toFixed(3) * 1000).toString,
-    "123",
-    req.body.userId,
-    req.body.domain
-  );
   res.send(req.body.userId);
 });
 
@@ -122,7 +101,6 @@ app.post("/verifyCertificate", (req, res) => {
   console.log("Verifying Certificate");
 
   //Code Goes Here
-  updateCertificate(req.body.certifierId, "yes");
   res.send(req.body.certifierId);
 });
 
@@ -132,8 +110,7 @@ app.post("/createCertifier", (req, res) => {
   console.log(req.body.name);
   const id = req.body.id;
   //Code Goes Here
-  var resss = createCertifier(id, req.body.name);
-  res.send(resss);
+  res.send('awefa');
 });
 
 //Post - Send user name
@@ -150,16 +127,7 @@ app.post("/login", (req, res) => {
   var body = lodash.pick(req.body, ["userId", "password"]);
   console.log(req.body.userId);
   if (body.userId == "123" && body.password == "1234") {
-    blocks = fetchUsers();
-    emps = blocks.filter(blck => {
-      if (blck.Record.role == 1) return blck;
-    });
-    certs = blocks.filter(blck => {
-      if (blck.Record.role == 2) return blck;
-    });
-    evnts = blocks.filter(blck => {
-      if (blck.Record.role == 3) return blck;
-    });
+    
     // res.send({
     //   verified: "yes",
     //   employees: emps,
@@ -224,7 +192,7 @@ app.post("/login", (req, res) => {
       ],
       me: {
         Key: "1",
-        Record: { certifierId: "56", name: "hola", expertise: "block", role: 0 }
+        Record: { certifierId: "56", name: "Anoop", expertise: "block", role: 0 }
       }
     });
   } else {

@@ -17,9 +17,9 @@ async function createCertifier(id,name) {
     const wallet = new FileSystemWallet(walletPath);
     console.log(`Wallet path: ${walletPath}`);
 
-    const userExists = await wallet.exists('anoop');
+    const userExists = await wallet.exists('shrey');
     if (!userExists) {
-        console.log('An identity for the user "anoop" does not exist in the wallet');
+        console.log('An identity for the user "shrey" does not exist in the wallet');
         console.log('Run the registerUser.js application before retrying');
         return;
     }
@@ -28,8 +28,8 @@ async function createCertifier(id,name) {
     console.log("connecting");
     await gateway.connect(ccpPath, {
       wallet,
-      identity: "anoop",
-      discovery: { enabled: true, asLocalhost: true }
+      identity: "shrey",
+      discovery: { enabled: true, asLocalhost: false }
     });
     console.log("connected");
     const network = await gateway.getNetwork("hackathon05");
